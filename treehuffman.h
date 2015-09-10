@@ -8,9 +8,10 @@
 class TreeHuffman
 {
     std::vector<Cell> arrayHuffman;
-    Cell poiter;
+    int size;
+    //Cell poiter;
 public:
-    TreeHuffman();
+    TreeHuffman(File inputFile);
 
 
 };
