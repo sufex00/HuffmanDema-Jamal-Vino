@@ -28,7 +28,6 @@ QString File::toString()
     }
     this->inputFile.close();
     return file;
-
 }
 
 int File::getFrequency(char character)
