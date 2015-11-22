@@ -1,21 +1,23 @@
-#ifndef FILE_H
-#define FILE_H
-
-#include<fstream>
-#include<QString>
-
+#include <QString>
+#include <fstream>
 
 class File
 {
-    std::ifstream inputFile;
-    QString fileName;
-    int frequency[256];
+    //256 é escolhido pelo número de caracteres que dispõe a tabela ASC.
+    int frequency[256]= {0};
+
+    QString Dir;
+
+    //std::ifstream file;
+
+    //QFile Arquivo;
+
 public:
-    File(QString fileName);
+
+    File(QString Endereco);
     QString toString();
-    int getFrequency(char character);
+    int getFrequency(int character);
+    QString getNome();
 
 
 };
-
-#endif // FILE_H

@@ -1,37 +1,59 @@
 #include "file.h"
-#include<QDebug>
+#include <QDebug>
+#include <QString>
+#include <QByteArray>
+#include<QFile>
 
-File::File(QString fileName)
-{
-    this->fileName=fileName;
-    for(int i=0 ; i<256 ; i++)
-    {
-        this->frequency[i]=0;
-    }
-    QString file = this->toString();
-    for(int i=0 ; i<file.size() ; i++)
-    {
-        int unsigned character;
-        character=file.at(i).toLatin1();
-        this->frequency[character]++;
-    }
-}
 
-QString File::toString()
-{
-    char c;
-    this->inputFile.open(this->fileName.toLatin1().data(), std::ios::binary);
-    QString file;
-    while(this->inputFile.get(c))
-    {
-        file.append(c);
-    }
-    this->inputFile.close();
-    return file;
-}
+// O construtor abre todas as informações que a classe precisa para ser aberta
 
-int File::getFrequency(char character)
-{
-    int unsigned intCharacter=character;
-    return this->frequency[intCharacter];
-}
+File::File(QString Endereco)
+    {
+
+        //Todas as vezes que eu quiser alterar algo numa classe tenho que usar esse this.
+        std::ifstream file;
+        this-> Dir = Endereco;
+
+        file.open (this->Dir.toLatin1().data(), std::ifstream::in);
+
+        QString aux1 = this->toString();
+
+       //Esse for pega tudo que tem no arquivo, lido no aux, e ordena
+
+        for(int i = 0; i<aux1.size(); i++){
+
+        //O unsigned serve para retirar a parte negativa do número, o ponto at serve para indicara a posição que está o caractere
+        unsigned int aux2 = aux1.at(i).toLatin1();
+
+        this->frequency[aux2]++;
+        }
+    }
+
+    QString File::toString()
+    {
+
+        QFile file(this->Dir);
+        if(!file.open(QIODevice::ReadOnly))
+            return QString(this->Dir);
+
+        char ToRead;
+
+        QString PathFile;
+
+        QTextStream in(&file);
+        while(!in.atEnd()){
+            PathFile.append(in.readAll());
+        }
+
+        return PathFile;
+    }
+
+    int File::getFrequency(int character)
+    {
+        return this->frequency[character];
+    }
+
+    QString File::getNome()
+    {
+        return this->Dir;
+    }
