@@ -1,5 +1,9 @@
+#ifndef FILE_H
+#define FILE_H
+
 #include <QString>
 #include <fstream>
+#include <QByteArray>
 
 class File
 {
@@ -8,6 +12,10 @@ class File
 
     QString Dir;
 
+    int size;
+
+    QByteArray file;
+
     //std::ifstream file;
 
     //QFile Arquivo;
@@ -15,9 +23,13 @@ class File
 public:
 
     File(QString Endereco);
-    QString toString();
+    QByteArray toString();
+    int toString(int position);
     int getFrequency(int character);
     QString getNome();
-
-
+    QString readFile(int initPosition, int sizeRead);
+    int readFile(int initPosition);
+    int getSize();
 };
+
+#endif //FILE_H
